@@ -29,7 +29,6 @@ jobs:
         if: github.ref == 'refs/heads/master'
         run: |
           npm i -g vsce
-          vsce login randymarsh77
           yarn semantic-release
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}

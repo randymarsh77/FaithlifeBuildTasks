@@ -19,7 +19,7 @@ if (!process.env.VSCE_PAT) {
 		);
 
 		await verifyExec(
-			`vsce publish ${version}`
+			`vsce publish ${version} --yarn`
 		);
 	} catch (e) {
 		console.error(e);
