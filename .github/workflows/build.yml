@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - '*'
+    tags-ignore:
+      - '*'
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - name: Install yarn
+        run: npm i -g yarn
+
+      - name: Build
+        run: |
+          yarn --frozen-lockfile
+          yarn build
+      - name: Release
+        if: github.ref == 'refs/heads/master'
+        run: |
+          npm i -g vsce
+          yarn semantic-release
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
