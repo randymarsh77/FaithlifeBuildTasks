@@ -5,6 +5,10 @@
 	"version": "0.0.0-managed-by-semantic-release",
 	"license": "MIT",
 	"publisher": "randymarsh77",
+	"icon": "images/icon.png",
+	"bugs": {
+		"url": "https://github.com/randymarsh77/FaithlifeBuildTasks/issues"
+	},
 	"repository": "https://github.com/randymarsh77/FaithlifeBuildTasks",
 	"engines": {
 		"vscode": "^1.45.0"
