@@ -3,6 +3,7 @@
 	"displayName": "Faithlife.Build Tasks",
 	"description": "Task provider for Faithlife.Build.",
 	"version": "0.0.0-managed-by-semantic-release",
+	"license": "MIT",
 	"publisher": "randymarsh77",
 	"engines": {
 		"vscode": "^1.45.0"
