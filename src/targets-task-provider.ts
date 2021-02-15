@@ -17,6 +17,12 @@ export class TargetsTaskProvider implements vscode.TaskProvider, vscode.Disposab
 				watcher.onDidDelete(() => (this.targetsPromise = undefined));
 				return [...acc, watcher];
 			}, [] as vscode.Disposable[]);
+
+		this.disposables.push(
+			vscode.workspace.onDidChangeConfiguration((e) => {
+				this.targetsPromise = undefined;
+			})
+		);
 	}
 
 	public dispose() {
