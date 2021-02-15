@@ -24,7 +24,7 @@ jobs:
       - name: Build
         run: |
           yarn --frozen-lockfile
-          yarn build
+          yarn compile
       - name: Release
         if: github.ref == 'refs/heads/master'
         run: |
