@@ -16,12 +16,17 @@ export function getSettings(workspace: string): ISettings {
 }
 
 function getBuildFlags(workspace: string) {
+	console.log(workspace.toLowerCase());
 	const config = vscode.workspace.getConfiguration('Faithlife.Build Tasks');
 	const flags = (config.get<string>('BuildFlags') || '')
 		.split(';')
 		.map((x) => x.trim())
-		.filter((x) => x.startsWith(workspace) || x.startsWith('All'))
-		.map((x) => x.replace(`${workspace}:`, '').replace('All:', '').trim());
+		.map((x) => x.split(':'))
+		.flatMap(([scopes, flags]) =>
+			scopes.split(',').map((scope) => [scope.toLowerCase(), flags])
+		)
+		.filter(([scope, _]) => workspace.toLowerCase().startsWith(scope) || scope === 'all')
+		.map(([_, flags]) => flags.trim());
 
 	return flags.join(' ');
 }
