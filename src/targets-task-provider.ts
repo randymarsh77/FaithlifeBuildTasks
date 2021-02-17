@@ -71,9 +71,9 @@ async function getTargets(): Promise<vscode.Task[]> {
 			continue;
 		}
 
-		const { commandLine } = settings;
+		const { commandLine, workingDirectory } = settings;
 		try {
-			const { stdout, stderr } = await execAsync(commandLine, { cwd: folderString });
+			const { stdout, stderr } = await execAsync(commandLine, { cwd: workingDirectory });
 			if (stderr && stderr.length > 0) {
 				getOutputChannel().appendLine(stderr);
 				getOutputChannel().show(true);

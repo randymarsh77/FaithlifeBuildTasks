@@ -16,13 +16,15 @@ export function createTask(
 		target,
 	};
 	const flags = settings.flagsForTarget[target] || '';
-	const { commandLine } = settings;
+	const { commandLine, workingDirectory } = settings;
 	const task = new vscode.Task(
 		kind,
 		workspaceFolder,
 		`${target} ${flags}`.trim(),
 		TargetTaskType,
-		new vscode.ShellExecution(`${commandLine} ${target} ${flags}`.trim()),
+		new vscode.ShellExecution(`${commandLine} ${target} ${flags}`.trim(), {
+			cwd: workingDirectory,
+		}),
 		[]
 	);
 	if (isBuildTarget(target)) {

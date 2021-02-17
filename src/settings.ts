@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 
 export interface ISettings {
 	commandLine: string;
+	workingDirectory: string;
 	flagsForTarget: { [target: string]: string };
 	fingerPrintingFiles: {
 		bootstrapperScriptPath: string;
@@ -14,11 +15,12 @@ export interface ISettings {
 export function getSettings(workspace: vscode.WorkspaceFolder): ISettings {
 	const buildFlags = getBuildFlags(workspace.name);
 	const packageFlags = getPackageFlags();
-	const { commandLine, ...fingerPrintingFiles } = getFingerPrintingFiles(
+	const { commandLine, workingDirectory, ...fingerPrintingFiles } = getFingerPrintingFiles(
 		workspace.uri.fsPath
 	);
 	return {
 		commandLine,
+		workingDirectory,
 		flagsForTarget: {
 			build: buildFlags,
 			package: `${buildFlags} ${packageFlags}`.trim(),
@@ -67,9 +69,11 @@ function getFingerPrintingFiles(folder: string) {
 
 	const command = bootstrapperScriptPath.endsWith('sh') ? 'sh' : 'pwsh';
 	const commandLine = `${command} ${bootstrapperScriptPath}`;
+	const workingDirectory = path.dirname(bootstrapperScriptPath);
 
 	return {
 		commandLine,
+		workingDirectory,
 		bootstrapperScriptPath,
 		toolsDirectoryPath,
 		allFiles: [
