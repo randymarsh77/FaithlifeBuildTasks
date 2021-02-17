@@ -1,15 +1,6 @@
-import * as path from 'path';
 import * as vscode from 'vscode';
 import { ISettings } from './settings';
 import { TargetTaskType } from './types';
-
-export function getFingerprintingFiles(folder: string) {
-	return [
-		path.join(folder, 'build.ps1'),
-		path.join(folder, 'tools', 'Build.csproj'),
-		path.join(folder, 'tools', 'Build.cs'),
-	];
-}
 
 interface FLBuildTaskDefinition extends vscode.TaskDefinition {
 	target: string;
@@ -24,13 +15,14 @@ export function createTask(
 		type: TargetTaskType,
 		target,
 	};
-	const flags = settings?.flagsForTarget[target] || '';
+	const flags = settings.flagsForTarget[target] || '';
+	const { commandLine } = settings;
 	const task = new vscode.Task(
 		kind,
 		workspaceFolder,
 		`${target} ${flags}`.trim(),
 		TargetTaskType,
-		new vscode.ShellExecution(`pwsh build.ps1 ${target} ${flags}`.trim()),
+		new vscode.ShellExecution(`${commandLine} ${target} ${flags}`.trim()),
 		[]
 	);
 	if (isBuildTarget(target)) {

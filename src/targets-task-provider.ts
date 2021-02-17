@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { getFingerprintingFiles, createTask } from './fl-build-utility';
+import { createTask } from './fl-build-utility';
 import { getSettings } from './settings';
 import { existsAsync, execAsync } from './utility';
 
@@ -9,7 +9,8 @@ export class TargetsTaskProvider implements vscode.TaskProvider, vscode.Disposab
 
 	constructor(workspaceFolders: readonly vscode.WorkspaceFolder[]) {
 		this.disposables = workspaceFolders
-			.flatMap((x) => getFingerprintingFiles(x.uri.fsPath))
+			.map((x) => getSettings(x))
+			.flatMap((x) => x.fingerPrintingFiles.allFiles)
 			.reduce((acc, v) => {
 				const watcher = vscode.workspace.createFileSystemWatcher(v);
 				watcher.onDidChange(() => (this.targetsPromise = undefined));
@@ -61,13 +62,14 @@ async function getTargets(): Promise<vscode.Task[]> {
 		if (!folderString) {
 			continue;
 		}
-		const allFilesExists = getFingerprintingFiles(folderString).map(existsAsync);
+
+		const settings = getSettings(workspaceFolder);
+		const allFilesExists = settings.fingerPrintingFiles.allFiles.map(existsAsync);
 		if (!(await Promise.all(allFilesExists))) {
 			continue;
 		}
 
-		const settings = getSettings(workspaceFolder.name);
-		const commandLine = `pwsh build.ps1`;
+		const { commandLine } = settings;
 		try {
 			const { stdout, stderr } = await execAsync(commandLine, { cwd: folderString });
 			if (stderr && stderr.length > 0) {

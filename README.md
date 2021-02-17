@@ -23,3 +23,23 @@ Example (macOS):
 ```
 ~/nuget-output
 ```
+
+#### Custom Build Files
+
+Some projects might have legacy and/or custom configuration as relates to the bootstrapper script(s) and build files.
+
+##### Bootstrapper
+
+You can specify an override to the bootstrapper. If the project has two platform independent scripts, `.sh` and `.cmd` use a pipe separated list contained in brackets of the valid extensions. The "best" match will be chosen based on the platform and tools available. e.g.
+
+```
+build.[sh|cmd]
+```
+
+##### Tools
+
+The tools directory must contain `Build.csproj` and `Build.cs`. However, if these files aren't in `tools/`, then provide a path override to their location. e.g.
+
+```
+tools/Build
+```

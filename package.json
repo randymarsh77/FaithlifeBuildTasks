@@ -48,6 +48,16 @@
 					"type": "string",
 					"default": null,
 					"description": "NuGet Output directory."
+				},
+				"Faithlife.Build Tasks.BootstrapperScriptPath": {
+					"type": "string",
+					"default": null,
+					"description": "Override the default path to the bootstrapper script."
+				},
+				"Faithlife.Build Tasks.ToolsDirectoryPath": {
+					"type": "string",
+					"default": null,
+					"description": "Override the default path to the tools directory."
 				}
 			}
 		}
