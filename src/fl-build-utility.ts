@@ -55,7 +55,7 @@ function isCleanTarget(name: string): boolean {
 
 function isTargetOfType(types: string[], name: string) {
 	for (const t of types) {
-		if (name.indexOf(name) !== -1) {
+		if (name.indexOf(t) !== -1) {
 			return true;
 		}
 	}
