@@ -63,7 +63,7 @@ function getFingerPrintingFiles(folder: string) {
 	const toolsDirectoryPath =
 		toolsDirectoryPathOverride && path.isAbsolute(toolsDirectoryPathOverride)
 			? toolsDirectoryPathOverride
-			: path.join(folder, toolsDirectoryPathOverride ?? 'tools');
+			: path.join(folder, toolsDirectoryPathOverride ?? path.join('tools', 'Build'));
 
 	const command = bootstrapperScriptPath.endsWith('sh') ? 'sh' : 'pwsh';
 	const commandLine = `${command} ${bootstrapperScriptPath}`;

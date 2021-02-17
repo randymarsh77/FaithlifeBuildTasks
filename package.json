@@ -52,12 +52,12 @@
 				"Faithlife.Build Tasks.BootstrapperScriptPath": {
 					"type": "string",
 					"default": null,
-					"description": "Override the default path to the bootstrapper script."
+					"description": "Override the default path to the bootstrapper script. Default: 'build.ps1'"
 				},
 				"Faithlife.Build Tasks.ToolsDirectoryPath": {
 					"type": "string",
 					"default": null,
-					"description": "Override the default path to the tools directory."
+					"description": "Override the default path to the build tools directory. Default: 'tools/build'"
 				}
 			}
 		}

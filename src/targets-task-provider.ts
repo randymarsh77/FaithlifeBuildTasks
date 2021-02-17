@@ -64,8 +64,10 @@ async function getTargets(): Promise<vscode.Task[]> {
 		}
 
 		const settings = getSettings(workspaceFolder);
-		const allFilesExists = settings.fingerPrintingFiles.allFiles.map(existsAsync);
-		if (!(await Promise.all(allFilesExists))) {
+		const allFilesExists = await Promise.all(
+			settings.fingerPrintingFiles.allFiles.map(existsAsync)
+		);
+		if (!allFilesExists.every((x) => x)) {
 			continue;
 		}
 
