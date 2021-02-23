@@ -2,6 +2,14 @@
 
 Contributes VSCode tasks for [Faithlife.Build](https://faithlife.github.io/FaithlifeBuild/) projects.
 
+## Requirements
+
+You need the associated tool to run your bootstrapper script installed and accessible in your PATH.
+
+- `.ps1` will use `pwsh` (macOS and Windows).
+- `.sh` will use `sh` (macOS).
+- `.cmd` will use `powershell` (Windows).
+
 ## Settings
 
 #### Build Flags
